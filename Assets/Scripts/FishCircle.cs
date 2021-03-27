@@ -1,36 +1,44 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
 
 public class FishCircle : MonoBehaviour
 {
-    public FishType fishType;
+    //A list of fishes that can be caught and chances to catch them. The sum of all chances should be 100
+    [SerializeField]public List<FishChance> fishList = new List<FishChance>();
 
+    [Tooltip("Starting and max range in which fish can be caught.")]
     public float maxRadius;
-    private float radius;
+    private float radius; //Decreases as fish are caught
 
-    public int numOfFish;
+    [Tooltip("Max number of fish that can be catched from this object")]
     public int maxFish;
+    private int numOfFish; //Current number of fish that can be caught
 
-    private Fish fish;
+    [Tooltip("Time in seconds between each catch")]
+    public float catchDelay = 1;
+
+    [Tooltip("After catch delay this is the max number of fish that can be caught.")]
+    public int maxFishPerCatch = 1;
+
     private CircleCollider2D circleCollider;
     private float nextCatch;
+    private Transform borderCircle;
+
+    [System.Serializable]
+    public struct FishChance
+    {
+        public FishType type;
+        public int chance;
+    }
 
     // Start is called before the first frame update
     void Start()
     {
         numOfFish = maxFish;
-        circleCollider = GetComponent<CircleCollider2D>();
 
-        //Find the correct fish struct by FishType
-        foreach (var fishItem in FishManager.Instance.Fish)
-        {
-            if (fishItem.type == fishType)
-            {
-                fish = fishItem;
-            }
-        }
+        circleCollider = GetComponent<CircleCollider2D>();
+        borderCircle = transform.Find("BorderCircle");
     }
 
     // Update is called once per frame
@@ -38,31 +46,48 @@ public class FishCircle : MonoBehaviour
     {
         //Less fish = smaller circle
         radius = maxRadius * ((float)numOfFish / (float)maxFish);
-        Debug.Log(maxRadius * ((float)numOfFish / (float)maxFish));
 
         circleCollider.radius = radius;
+        borderCircle.localScale = new Vector2(radius, radius);
     }
 
+    public FishType RandomFishType()
+    {
+        int rand = Random.Range(0, 101);
+        int j = 0;
+        FishType fishToDrop = 0;
+        for (int i = 0; i < fishList.Count; i++)
+        {
+            if (rand >= j && rand <= j + fishList[i].chance)
+            {
+                fishToDrop = fishList[i].type;
+                break;
+            }
+            else
+            {
+                j += fishList[i].chance;
+            }
+        }
+        return fishToDrop;
+    }
+
+    //Called every once per frame if the player is touching the colider/trigger
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        if (collision.CompareTag("Player") && numOfFish > 0)
         {
             Cargo playerCargo = collision.GetComponent<Cargo>();
 
-            //Timer, runs evey second
+            //Timer, runs every catchDelay seconds
             if (Time.time > nextCatch)
             {
-                nextCatch = Time.time + 1;
+                nextCatch = Time.time + catchDelay;
+                int catchNum = Random.Range(1, Mathf.Min(maxFishPerCatch, numOfFish)+ 1);
 
-                if (numOfFish > fish.catchPerSecond)
+                if (numOfFish > catchNum)
                 {
-                    playerCargo.CatchFish(fish.type, fish.catchPerSecond);
-                    numOfFish -= fish.catchPerSecond;
-                }
-                else
-                {
-                    playerCargo.CatchFish(fish.type, numOfFish);
-                    numOfFish = 0;
+                    playerCargo.CatchFish(RandomFishType(), catchNum);
+                    numOfFish -= catchNum;
                 }
             }
         }

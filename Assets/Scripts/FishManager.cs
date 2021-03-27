@@ -24,6 +24,6 @@ public struct Fish
 {
     public FishType type;
     public float price;
-    public int catchPerSecond;
+    //public float globalChanceToCatch;
     public float speed;
 }
