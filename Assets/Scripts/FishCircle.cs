@@ -49,6 +49,11 @@ public class FishCircle : MonoBehaviour
 
         circleCollider.radius = radius;
         borderCircle.localScale = new Vector2(radius, radius);
+
+        if (numOfFish == 0)
+        {
+            Destroy(gameObject);
+        }
     }
 
     public FishType RandomFishType()

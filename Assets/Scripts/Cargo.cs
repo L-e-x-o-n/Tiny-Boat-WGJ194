@@ -9,10 +9,21 @@ public class Cargo : MonoBehaviour
     public int capacity;
     public Dictionary<FishType, int> FishCargo = new Dictionary<FishType, int>();
     private Dictionary<FishType, TMPro.TMP_Text> cargoUI = new Dictionary<FishType, TMPro.TMP_Text>();
+
+    [Header("Cargo UI")]
+    public bool showCargoUI = true;
     public TMPro.TMP_Text textPrefab;
     public Transform UIParent;
 
     void Update()
+    {
+        if (showCargoUI)
+        {
+            UpdateCargoUI();
+        }
+    }
+
+    public void UpdateCargoUI()
     {
         //Dictionaries are not shown in Unity Inspector so this is a temporary solution
         //An UI that shows different fish and their number is needed
@@ -30,11 +41,11 @@ public class Cargo : MonoBehaviour
 
         foreach (var UIText in cargoUI.Keys)
         {
-            cargoUI[UIText].text = UIText.ToString() +": "+ FishCargo[UIText].ToString();
+            cargoUI[UIText].text = UIText.ToString() + ": " + FishCargo[UIText].ToString();
         }
     }
 
-    //TODO stop catching fish if it
+
     public void CatchFish(FishType typeCatched, int numCatched) 
     {
         if (spaceFilled + numCatched <= capacity)
@@ -56,5 +67,18 @@ public class Cargo : MonoBehaviour
             capacity full, decide what to do...
         }
         */
+    }
+
+    public void RemoveFish(FishType type, int num)
+    {
+        if (num >= FishCargo[type])
+        {
+            FishCargo[type] -= num;
+            spaceFilled -= num;
+        }
+        else
+        {
+            Debug.LogWarning("Trying to remove more fish than there is in cargo.");
+        }
     }
 }

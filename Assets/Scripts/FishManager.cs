@@ -6,7 +6,7 @@ using System;
 public class FishManager : Singleton<FishManager>
 {
     //A list of fish, editable in the inspector
-    public List<Fish> Fish = new List<Fish>();
+    public List<Fish> GlobalFish = new List<Fish>();
 }
 
 public enum FishType
@@ -20,10 +20,8 @@ public enum FishType
 }
 
 [Serializable]
-public struct Fish
+public class Fish
 {
     public FishType type;
-    public float price;
-    //public float globalChanceToCatch;
-    public float speed;
+    public int price;
 }
