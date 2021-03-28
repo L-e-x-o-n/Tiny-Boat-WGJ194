@@ -8,9 +8,9 @@ public class Port : MonoBehaviour
     public float accessRadius = 3;
     //public string portName;
 
-    [Header("Economy")]
+    /*[Header("Economy")]
     public int maxPriceChange;
-    public float scanRange;
+    public float scanRange;*/
     public List<Fish> LocalFish = new List<Fish>();
 
     private FishManager fm;
@@ -43,7 +43,7 @@ public class Port : MonoBehaviour
         GetGlobalPrices();
 
         //Randomise prices
-        for (int i = 0; i < LocalFish.Count; i++)
+        /*for (int i = 0; i < LocalFish.Count; i++)
         {
             LocalFish[i].price += Random.Range(-maxPriceChange, maxPriceChange + 1);
         }
@@ -71,12 +71,16 @@ public class Port : MonoBehaviour
             {
                 LocalFish[i].price = 1;
             }
-        }
+        }*/
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         OpenPortUI();
+        foreach (var fish in pCargo.FishCargo)
+        {
+            Sell(fish.Key, fish.Value);
+        }
     }
 
     public void OpenPortUI()
