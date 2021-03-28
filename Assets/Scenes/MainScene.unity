@@ -174,7 +174,7 @@ TilemapRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 11939d413be518c4dab5d593b5f3ada5, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -51070,7 +51070,7 @@ GameObject:
   - component: {fileID: 322817396}
   - component: {fileID: 322817395}
   m_Layer: 0
-  m_Name: FishManager
+  m_Name: GameManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -51099,6 +51099,17 @@ MonoBehaviour:
     price: 40
   - type: 5
     price: 50
+  GlobalUpgrade:
+  - upgrade: 0
+    price: 100
+  - upgrade: 1
+    price: 1000
+  - upgrade: 2
+    price: 500
+  - upgrade: 3
+    price: 2000
+  - upgrade: 4
+    price: 2000
 --- !u!4 &322817396
 Transform:
   m_ObjectHideFlags: 0
@@ -51715,6 +51726,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   money: 0
   moneyText: {fileID: 1454896337}
+  catchRateModifier: 1
+  forwardSpeedModifier: 1
+  rotationSpeedModifier: 1
+  sellModifier: 1
+  buyModifier: 1
 --- !u!1 &1166960339
 GameObject:
   m_ObjectHideFlags: 0
@@ -52564,6 +52580,9 @@ MonoBehaviour:
   maxFish: 100
   catchDelay: 1
   maxFishPerCatch: 1
+  speed: 1
+  target: {x: 0, y: 0}
+  targetDistance: 5
 --- !u!58 &1788866367
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -52639,7 +52658,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1788866365}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.75, y: 0, z: 0}
+  m_LocalPosition: {x: -6.75, y: 0.95, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1932530261}
