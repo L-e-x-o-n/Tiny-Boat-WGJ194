@@ -21,9 +21,16 @@ public class FishCircle : MonoBehaviour
     [Tooltip("After catch delay this is the max number of fish that can be caught.")]
     public int maxFishPerCatch = 1;
 
+    [Header("Movement")]
+    public float speed;
+    public Vector2 target;
+    public float targetDistance = 5;
+
+    private Transform t;
     private CircleCollider2D circleCollider;
     private float nextCatch;
     private Transform borderCircle;
+    private Player p;
 
     [System.Serializable]
     public struct FishChance
@@ -39,6 +46,8 @@ public class FishCircle : MonoBehaviour
 
         circleCollider = GetComponent<CircleCollider2D>();
         borderCircle = transform.Find("BorderCircle");
+        t = GetComponent<Transform>();
+        p = Player.Instance;
     }
 
     // Update is called once per frame
@@ -53,6 +62,18 @@ public class FishCircle : MonoBehaviour
         if (numOfFish == 0)
         {
             Destroy(gameObject);
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        if (target == Vector2.zero || target == (Vector2)t.position)
+        {
+            target = Random.insideUnitCircle * t.position * targetDistance;
+        }
+        else
+        {
+            t.position = Vector2.MoveTowards(t.position, target, Time.fixedDeltaTime * speed);
         }
     }
 
@@ -86,7 +107,7 @@ public class FishCircle : MonoBehaviour
             //Timer, runs every catchDelay seconds
             if (Time.time > nextCatch)
             {
-                nextCatch = Time.time + catchDelay;
+                nextCatch = Time.time + catchDelay * p.catchRateModifier;
                 int catchNum = Random.Range(1, Mathf.Min(maxFishPerCatch, numOfFish)+ 1);
 
                 if (numOfFish > catchNum)

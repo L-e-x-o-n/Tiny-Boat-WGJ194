@@ -13,7 +13,7 @@ public class Port : MonoBehaviour
     public float scanRange;*/
     public List<Fish> LocalFish = new List<Fish>();
 
-    private FishManager fm;
+    private GameManager gm;
     private Player p;
     private Cargo pCargo;
     private Transform circleTransform;
@@ -23,7 +23,7 @@ public class Port : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        fm = FishManager.Instance;
+        gm = GameManager.Instance;
         p = Player.Instance;
         pCargo = p.GetComponent<Cargo>();
         circleTransform = transform.Find("PortCircleCollider");
@@ -35,9 +35,9 @@ public class Port : MonoBehaviour
             Debug.LogWarning(">>Port UI<< parent missing on " + transform.name);
         }
 
-        for (int i = 0; i < fm.GlobalFish.Count; i++)
+        for (int i = 0; i < gm.GlobalFish.Count; i++)
         {
-            LocalFish.Add(fm.GlobalFish[i]);
+            LocalFish.Add(gm.GlobalFish[i]);
         }
 
         GetGlobalPrices();
@@ -92,13 +92,13 @@ public class Port : MonoBehaviour
 
     void GetGlobalPrices()
     {
-        for (int i = 0; i < fm.GlobalFish.Count; i++)
+        for (int i = 0; i < gm.GlobalFish.Count; i++)
         {
             for (int j = 0; j < LocalFish.Count; j++)
             {
-                if (LocalFish[j].type == fm.GlobalFish[i].type)
+                if (LocalFish[j].type == gm.GlobalFish[i].type)
                 {
-                    LocalFish[j].price = fm.GlobalFish[i].price;
+                    LocalFish[j].price = gm.GlobalFish[i].price;
                 }
             }
         }
@@ -113,9 +113,21 @@ public class Port : MonoBehaviour
             if (LocalFish[i].type == type)
             {
                 //Get money for the fish and remove it from cargo
-                p.money += num * LocalFish[i].price;
+                p.money += num * LocalFish[i].price * p.sellModifier;
                 pCargo.RemoveFish(type, num);
                 return;
+            }
+        }
+    }
+
+    public void Buy(Upgrades upgradeToBuy, int upgradeAmount)
+    {
+        for (int i = 0; i < gm.GlobalUpgrade.Count; i++)
+        {
+            if (gm.GlobalUpgrade[i].upgrade == upgradeToBuy)
+            {
+                p.Upgrade(upgradeToBuy, upgradeAmount);
+                p.money -= gm.GlobalUpgrade[i].price * (1 /  p.buyModifier);
             }
         }
     }
