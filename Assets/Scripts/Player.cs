@@ -5,8 +5,7 @@ using UnityEngine;
 public class Player : Singleton<Player>
 {
     public int money;
-
-
+    public TMPro.TMP_Text moneyText;
 
     // Start is called before the first frame update
     void Start()
@@ -17,6 +16,6 @@ public class Player : Singleton<Player>
     // Update is called once per frame
     void Update()
     {
-        
+        moneyText.text = "$" + money.ToString();
     }
 }
