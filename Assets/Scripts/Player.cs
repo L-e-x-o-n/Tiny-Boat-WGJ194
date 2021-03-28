@@ -18,4 +18,10 @@ public class Player : Singleton<Player>
     {
         moneyText.text = "$" + money.ToString();
     }
+
+    class Upgrade
+    {
+        int cost;
+        int capcaity; 
+    }
 }
