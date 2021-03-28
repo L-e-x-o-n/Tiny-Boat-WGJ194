@@ -77,9 +77,11 @@ public class Port : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         OpenPortUI();
-        foreach (var fish in pCargo.FishCargo)
+        Dictionary<FishType, int> cargo = pCargo.FishCargo;
+        List<FishType> keys = new List<FishType>(cargo.Keys);
+        foreach (var fish in keys)
         {
-            Sell(fish.Key, fish.Value);
+            Sell(fish, cargo[fish]);
         }
     }
 
