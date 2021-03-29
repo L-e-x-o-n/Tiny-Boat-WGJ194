@@ -13,6 +13,8 @@ public class Port : MonoBehaviour
     public float scanRange;*/
     public List<Fish> LocalFish = new List<Fish>();
 
+    public Upgrade upgrade;
+
     private GameManager gm;
     private Player p;
     private Cargo pCargo;
