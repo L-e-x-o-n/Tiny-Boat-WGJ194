@@ -15,6 +15,18 @@ public class Cargo : MonoBehaviour
     public TMPro.TMP_Text textPrefab;
     public Transform UIParent;
 
+    private GameManager gm;
+
+    void Start()
+    {
+        gm = GameManager.Instance;
+
+        for (int i = 0; i < gm.GlobalFish.Count; i++)
+        {
+            FishCargo.Add(gm.GlobalFish[i].type, 0);
+        }
+    }
+
     void Update()
     {
         if (showCargoUI)
@@ -53,10 +65,6 @@ public class Cargo : MonoBehaviour
             if (FishCargo.ContainsKey(typeCatched))
             {
                 FishCargo[typeCatched] += numCatched;
-            }
-            else
-            {
-                FishCargo.Add(typeCatched, numCatched);
             }
 
             spaceFilled += numCatched;

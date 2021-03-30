@@ -28,8 +28,8 @@ public class FishCircle : MonoBehaviour
 
     private Transform t;
     private CircleCollider2D circleCollider;
-    private float nextCatch;
     private Transform borderCircle;
+    private float nextCatch;
     private Player p;
 
     [System.Serializable]
@@ -107,8 +107,8 @@ public class FishCircle : MonoBehaviour
             //Timer, runs every catchDelay seconds
             if (Time.time > nextCatch)
             {
-                nextCatch = Time.time + catchDelay * p.catchRateModifier;
-                int catchNum = Random.Range(1, Mathf.Min(maxFishPerCatch, numOfFish)+ 1);
+                nextCatch = Time.time + catchDelay * (1 / p.catchRateModifier);
+                int catchNum = Random.Range(1, Mathf.Min(maxFishPerCatch, numOfFish) + 1);
 
                 if (numOfFish > catchNum)
                 {

@@ -28,24 +28,24 @@ public class Player : Singleton<Player>
         moneyText.text = "$" + money.ToString();
     }
 
-    public void Upgrade(Upgrades upgrade, int amount)
+    public void Upgrade(UpgradeType upgrade, int amount)
     {
         switch (upgrade)
         {
-            case Upgrades.Capacity:
-                cargo.capacity += amount;
+            case UpgradeType.Capacity:
+                cargo.capacity *= amount;
                 break;
-            case Upgrades.Speed:
+            case UpgradeType.Speed:
                 forwardSpeedModifier += amount;
                 rotationSpeedModifier += amount;
                 break;
-            case Upgrades.CatchRate:
+            case UpgradeType.CatchRate:
                 catchRateModifier += amount;
                 break;
-            case Upgrades.FishSellPrice:
+            case UpgradeType.FishSellPrice:
                 sellModifier += amount;
                 break;
-            case Upgrades.UpgradeBuyPrice:
+            case UpgradeType.UpgradeBuyPrice:
                 buyModifier += amount;
                 break;
             default:

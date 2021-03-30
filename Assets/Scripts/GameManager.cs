@@ -10,6 +10,9 @@ public class GameManager : Singleton<GameManager>
 
     //A list of upgrades and their prices, editable in the inspector
     public List<UpgradePrice> GlobalUpgrade = new List<UpgradePrice>();
+
+    //"How much the price changes for each upgrade bought. <0 gets cheaper >0 get more expensive
+    public float changePerBuy = 1.5f;
 }
 
 public enum FishType
@@ -22,7 +25,7 @@ public enum FishType
     UltraRare,
 }
 
-public enum Upgrades
+public enum UpgradeType
 {
     Capacity,
     Speed,
@@ -41,6 +44,6 @@ public class Fish
 [Serializable]
 public class UpgradePrice
 {
-    public Upgrades upgrade;
+    public UpgradeType upgrade;
     public int price;
 }
