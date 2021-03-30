@@ -73,6 +73,11 @@ public class FishCircle : MonoBehaviour
         }
         else
         {
+            if (Physics2D.OverlapCircle(target, targetDistance + 1))
+            {
+                target = Vector2.zero;
+            }
+
             t.position = Vector2.MoveTowards(t.position, target, Time.fixedDeltaTime * speed);
         }
     }
