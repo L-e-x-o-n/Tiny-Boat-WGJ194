@@ -12,9 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13b75c95f34a00d4e8c04f76b73312e6, type: 3}
   m_Name: Deep TR
   m_EditorClassIdentifier: 
-  m_AnimatedSprites: []
-  m_MinSpeed: 1
-  m_MaxSpeed: 1
+  m_AnimatedSprites:
+  - {fileID: 7591774343886807129, guid: c68c775bd1a8946448fbbdd3f8f1e708, type: 3}
+  - {fileID: 8954592487278907307, guid: c68c775bd1a8946448fbbdd3f8f1e708, type: 3}
+  - {fileID: -7504709878752999052, guid: c68c775bd1a8946448fbbdd3f8f1e708, type: 3}
+  - {fileID: 2664101274904992878, guid: c68c775bd1a8946448fbbdd3f8f1e708, type: 3}
+  m_MinSpeed: 3
+  m_MaxSpeed: 3
   m_AnimationStartTime: 0
   m_AnimationStartFrame: 0
   m_TileColliderType: 0

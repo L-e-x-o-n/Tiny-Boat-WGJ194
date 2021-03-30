@@ -12,9 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13b75c95f34a00d4e8c04f76b73312e6, type: 3}
   m_Name: Deep BL
   m_EditorClassIdentifier: 
-  m_AnimatedSprites: []
-  m_MinSpeed: 1
-  m_MaxSpeed: 1
+  m_AnimatedSprites:
+  - {fileID: 2268463149579773632, guid: c68c775bd1a8946448fbbdd3f8f1e708, type: 3}
+  - {fileID: -5337168907215210022, guid: c68c775bd1a8946448fbbdd3f8f1e708, type: 3}
+  - {fileID: 2538814059201952490, guid: c68c775bd1a8946448fbbdd3f8f1e708, type: 3}
+  - {fileID: 5136711360764703594, guid: c68c775bd1a8946448fbbdd3f8f1e708, type: 3}
+  m_MinSpeed: 3
+  m_MaxSpeed: 3
   m_AnimationStartTime: 0
   m_AnimationStartFrame: 0
   m_TileColliderType: 0
